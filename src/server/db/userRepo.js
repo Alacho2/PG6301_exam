@@ -50,7 +50,7 @@ function createUser(id, password, birthday, country){
   return true;
 }
 
-function askForFriendship(toUser, fromUser){
+function askForFriendship(fromUser, toUser){
   const askedUser = getUser(toUser);
   const asker = getUser(fromUser);
 
@@ -58,7 +58,10 @@ function askForFriendship(toUser, fromUser){
     return false;
   }
 
+
   askedUser.requestFrom.push(asker.id);
+  asker.requestTo.push(askedUser.id);
+  console.log(askedUser, asker);
   return true;
 }
 

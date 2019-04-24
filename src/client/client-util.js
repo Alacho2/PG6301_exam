@@ -34,4 +34,39 @@ const getPost = async (id) => {
   }
 };
 
-export {getProfile, getPost}
+const askFriendship = async (userTo, userFrom) => {
+  const url = '/api/friend';
+
+  const payload = {userFrom: userFrom, userTo: userTo};
+
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch (err) {
+    console.log(err);
+    return {errorMsg: "Failed to connect " + err};
+
+  }
+  if (response.status === 400) {
+    return {errorMsg: "Invalid username/password"};
+  }
+
+  if(response.status === 304){
+    return {errorMsg: "You've already done that"};
+
+  }
+
+  if (response.status !== 201) {
+    return {errorMsg: "Error when connecting to server. Status code: " + response.status};
+
+  }
+  return {errorMsg: "Request sent"};
+};
+
+export {getProfile, getPost, askFriendship}
