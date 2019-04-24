@@ -47,8 +47,7 @@ export class Login extends React.Component{
     }
 
     if (response.status !== 204) {
-      this.setState({
-        errorMsg:
+      this.setState({errorMsg:
           "Error when connecting to server: status code " + response.status
       });
       return;

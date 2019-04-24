@@ -4,7 +4,7 @@ const posts = new Map();
 
 let counter = 0;
 
-getOnePost = (id) => {
+function getOnePost(id) {
   return posts.get(id)
 };
 

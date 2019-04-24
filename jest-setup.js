@@ -1,6 +1,6 @@
-const {configure } = require('enzyme');
+const {configure } = require('enzyme/build');
 const jsdom = require('jsdom');
-const Adapter = require('enzyme-adapter-react-16');
+const Adapter = require('enzyme-adapter-react-16/build');
 
 function setUpDomEnvironment() {
   const { JSDOM } = jsdom;
@@ -9,6 +9,7 @@ function setUpDomEnvironment() {
 
   global.window = window;
   global.document = window.document;
+  global.location = window.location;
   global.navigator = {userAgent: 'node.js'};
   copyProps(window, global);
 }

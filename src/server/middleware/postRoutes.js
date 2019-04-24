@@ -18,7 +18,6 @@ module.exports = app => {
 
   app.post("/api/posts", (req, res) => {
     const post = req.body;
-    console.log("Were here");
     postRepo.createPost(post.author, post.text);
     res.status(201).send()
   })

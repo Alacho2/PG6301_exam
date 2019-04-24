@@ -61,16 +61,15 @@ function askForFriendship(fromUser, toUser){
 
   askedUser.requestFrom.push(asker.id);
   asker.requestTo.push(askedUser.id);
-  console.log(askedUser, asker);
   return true;
 }
 
 function removeAllUsers(){
   if(users.size === 0){
-    return "Users are already empty";
+    return false;
   } else {
     users.clear();
-    return "Deleted all users";
+    return true;
   }
 }
 
@@ -83,9 +82,6 @@ function removeAllUsers(){
 
 createUser('Chef', "abcd", "29.09.1929", "Norway");
 createUser('Håvard', "1234", "25.05.1994", "Norway");
-
-//users.clear();
-console.log("user was cleared");
 
 module.exports = {
   getUser,
