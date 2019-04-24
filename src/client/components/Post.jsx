@@ -1,6 +1,6 @@
 import React from 'react';
 import {getPost} from '../client-util.js';
-import {getProfile} from "../client-util";
+import moment from "moment";
 
 export class Post extends React.Component {
 
@@ -25,13 +25,20 @@ export class Post extends React.Component {
       //window.location = "/create";
       return
     }
-    this.setState({id: res.id, post: res})
+    this.setState({id: res.id, post: res.post})
   };
 
   render() {
+    const post = this.state.post;
+    const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
     return (
       <div>
-        <h2>Posts</h2>
+        {post && <div>
+          <h2>Post</h2>
+          <h5>{post.author}</h5>
+          <p>{ago}</p>
+          <p>{post.text}</p>
+        </div>}
       </div>
     )
   }

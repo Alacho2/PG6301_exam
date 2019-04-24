@@ -25,11 +25,10 @@ export class App extends React.Component {
   }
 
   componentDidMount(){
-    this.fetchUser();
+    this.getUser();
   }
 
-  fetchUser = async () => {
-    if(this.state.username){
+  getUser = async () => {
       const response = await fetch('/api/user', {
         method: 'GET',
         credentials: 'include',
@@ -38,7 +37,6 @@ export class App extends React.Component {
         const payload = await response.json();
         this.setSignIn(payload.userId)
       }
-    }
   };
 
   setSignIn = (username) => {

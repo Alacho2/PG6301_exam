@@ -12,12 +12,11 @@ function createPost(author, text){
   counter = ++counter+"";
 
   const date = moment().format('MMMM Do YYYY, h:mm:ss a');
-  //const ago = moment(date, 'MMMM Do YYYY, h:mm:ss a').fromNow();
 
   const post = {
     id: counter,
     author: author,
-    post: text,
+    text: text,
     date: date,
   };
 

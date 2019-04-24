@@ -34,9 +34,10 @@ const userRepo = require('../db/userRepo.js');
     })
   });
 
-  router.post('/logout', (req, res) => {
+  //TODO(Håvard) Implement as a post
+router.get('/logout', (req, res) => {
     req.logout();
-    res.status(204).send()
+    res.redirect('/').send();
   });
 
   router.get("/user", (req, res) => {
