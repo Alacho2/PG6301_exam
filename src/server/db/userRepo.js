@@ -4,6 +4,14 @@ function getUser(id){
   return users.get(id)
 }
 
+function getUserInfo(id) {
+  const user = getUser(id);
+  if(user){
+    user.password = null;
+  }
+  return user;
+}
+
 function removeUser(id) {
   users.forEach(user => {
     if(user.id === id){
@@ -19,14 +27,16 @@ function verifyUser(id, password){
   return getUser(id) === undefined ? false : user.password === password
 }
 
-function createUser(id, password){
+function createUser(id, password, birthday, country){
   if(getUser(id) !== undefined || id === undefined){
     return false
   }
 
   const user = {
     id,
-    password
+    password,
+    birthday,
+    country
   };
 
   users.set(id, user);
@@ -52,4 +62,4 @@ function removeAllUsers(){
 //users.clear();
 console.log("user was cleared");
 
-module.exports = {getUser, removeUser, createUser, removeAllUsers, verifyUser};
+module.exports = {getUser, getUserInfo, removeUser, createUser, removeAllUsers, verifyUser};

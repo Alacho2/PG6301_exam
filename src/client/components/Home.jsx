@@ -1,6 +1,5 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {getMenu} from "../client-util.js";
 
 export class Home extends React.Component {
 
@@ -9,23 +8,29 @@ export class Home extends React.Component {
   };
 
   componentDidMount(){
-    this.collectMenu()
+    /*this.collectMenu() */
   }
 
   collectMenu = async () => {
-    const req = await getMenu(1);
-    this.setState({menu: req.menu})
+    /*const req = await getMenu(1);
+    this.setState({menu: req.menu}) */
   };
 
   render() {
     //const menu = this.state.menu;
-    //const loggedIn = this.props.username ? this.props.username : null;
+    const loggedIn = this.props.username ? this.props.username : null;
+
     return (
       <div>
-        {//<p>Hello {loggedIn}</p>
-        }
-        <Link to="/login" style={{marginRight: "20px"}}>Login</Link>
-        {!this.props.username && <Link to="/register">Register</Link> }
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-8"><p>Hallo <Link to={"/"}>{loggedIn}</Link> </p></div>
+            <div className="col-sm-4">
+              {!loggedIn && <Link to="/login" className="mr-5">Login</Link>}
+              {!loggedIn && <Link to="/register">Register</Link> }
+            </div>
+           </div>
+        </div>
         {/*menu === null ? <p>Fetching menu</p> : menu.days.map(item => {
           return (
             <div key={item.name}>

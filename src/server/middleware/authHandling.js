@@ -62,5 +62,5 @@ module.exports = app => {
 
   app.use('/api', routes);
 
-  userRepo.createUser('Chef', "abcd");
+  userRepo.createUser('Chef', "abcd", "25.05.1994", "Norway");
 };

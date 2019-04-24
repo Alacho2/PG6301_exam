@@ -1,5 +1,5 @@
-const getMenu = async (id) => {
-  const url = `/api/menu/${id}`;
+const getProfile = async (id) => {
+  const url = `/api/profile/${id}`;
   try {
     const response = await fetch(url,
       {
@@ -10,10 +10,28 @@ const getMenu = async (id) => {
       }
     );
     const result = await response.json();
-    return {menu: result, status: response.status}
+    return {user: result, status: response.status}
   } catch (error) {
     return {errorMsg: error}
   }
 };
 
-export {getMenu}
+const getPost = async (id) => {
+  const url = `/api/posts/${id}`;
+  try {
+    const response = await fetch(url,
+      {
+        method: 'get',
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }
+    );
+    const result = await response.json();
+    return {post: result, status: response.status}
+  } catch (error) {
+    return {errorMsg: error}
+  }
+};
+
+export {getProfile, getPost}

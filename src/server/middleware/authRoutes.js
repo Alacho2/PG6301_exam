@@ -14,7 +14,9 @@ const userRepo = require('../db/userRepo.js');
   });
 
   router.post('/register', (req, res) => {
-    const created = userRepo.createUser(req.body.username, req.body.password);
+    const {username, password, birthday, country} = req.body;
+
+    const created = userRepo.createUser(username, password, birthday, country);
 
     if(!created) {
       res.status(400).send();
@@ -38,7 +40,6 @@ const userRepo = require('../db/userRepo.js');
   });
 
   router.get("/user", (req, res) => {
-
     if(req.user){
       res.json({
         userId: req.user.id,

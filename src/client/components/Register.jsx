@@ -16,24 +16,35 @@ export class Register extends React.Component {
       username: "",
       password: "",
       confirmedPsw: "",
+      birthday: "",
+      country: "",
       errorMsg: null,
     }
   }
 
   onUserIdChange = (event) => {
-    this.setState({username: event.target.value, errorMsg: null});
+    this.setState({username: event.target.value});
   };
 
   onPasswordChange = (event) => {
-    this.setState({password: event.target.value, errorMsg: null})
+    this.setState({password: event.target.value})
   };
 
   onConfirmChange = (event) => {
-    this.setState({confirmedPsw: event.target.value, errorMsg: null})
+    this.setState({confirmedPsw: event.target.value})
+  };
+
+
+  onBirthdayChange = (event) => {
+    this.setState({birthday: event.target.value})
+  };
+
+  onCountryChange = (event) => {
+    this.setState({country: event.target.value})
   };
 
   doRegister = async () => {
-    const {username, password, confirmedPsw} = this.state;
+    const {username, password, confirmedPsw, birthday, country} = this.state;
 
     if (confirmedPsw !== password) {
       this.setState({errorMsg: "You did a booboo with password"});
@@ -41,7 +52,7 @@ export class Register extends React.Component {
     }
     const url = '/api/register';
 
-    const payload = {username: username, password: password};
+    const payload = {username: username, password: password, birthday, country};
 
     let response;
     try {
@@ -96,7 +107,7 @@ export class Register extends React.Component {
       <div>
         <div className="signupArea">
           <div>
-            <p>Username</p>
+            <p>Name</p>
             <input
               id="username"
               type="text"
@@ -123,6 +134,25 @@ export class Register extends React.Component {
             />
             <div>{confirmMsg}</div>
           </div>
+          <div>
+            <p>Birthday:</p>
+            <input
+              id="birthday"
+              type="text"
+              value={this.state.birthday}
+              onChange={this.onBirthdayChange}
+            />
+          </div>
+          <div>
+            <p>Country:</p>
+            <input
+              id="country"
+              type="text"
+              value={this.state.country}
+              onChange={this.onCountryChange}
+            />
+          </div>
+
           {error}
           <div id="signupBtn" onClick={this.doRegister}>
             Sign Up
