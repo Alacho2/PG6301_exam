@@ -5,6 +5,7 @@ require('./middleware/authHandling.js')(app);
 //require('./middleware/menuHandling.js')(app);
 require('./middleware/profileRoutes.js')(app);
 require('./middleware/postRoutes.js')(app);
+require('./middleware/friendRoutes.js')(app);
 require('./sockets/feed-socket.js')(app);
 const postRepo = require('./db/postRepo.js');
 

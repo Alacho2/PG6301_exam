@@ -51,9 +51,15 @@ function createUser(id, password, birthday, country){
 }
 
 function askForFriendship(toUser, fromUser){
+  const askedUser = getUser(toUser);
+  const asker = getUser(fromUser);
 
-  //Pushe til friend request
-  const user = getUser(toUser)
+  if(askedUser.requestFrom.includes(asker.id)) {
+    return false;
+  }
+
+  askedUser.requestFrom.push(asker.id);
+  return true;
 }
 
 function removeAllUsers(){
@@ -85,5 +91,6 @@ module.exports = {
   createUser,
   removeAllUsers,
   verifyUser,
-  getAllUsers
+  getAllUsers,
+  askForFriendship,
 };
