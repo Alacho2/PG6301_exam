@@ -7,7 +7,7 @@ function getUser(id){
 function getUserInfo(id) {
   const user = getUser(id);
   if(user){
-    user.password = null;
+    delete user.password
   }
   return user;
 }
@@ -27,6 +27,10 @@ function verifyUser(id, password){
   return getUser(id) === undefined ? false : user.password === password
 }
 
+function getAllUsers(){
+  return Array.from(users.values());
+}
+
 function createUser(id, password, birthday, country){
   if(getUser(id) !== undefined || id === undefined){
     return false
@@ -36,11 +40,20 @@ function createUser(id, password, birthday, country){
     id,
     password,
     birthday,
-    country
+    country,
+    friends: [],
+    requestTo: [],
+    requestFrom: [],
   };
 
   users.set(id, user);
   return true;
+}
+
+function askForFriendship(toUser, fromUser){
+
+  //Pushe til friend request
+  const user = getUser(toUser)
 }
 
 function removeAllUsers(){
@@ -59,7 +72,18 @@ function removeAllUsers(){
   })
 } */
 
+createUser('Chef', "abcd", "29.09.1929", "Norway");
+createUser('Håvard', "1234", "25.05.1994", "Norway");
+
 //users.clear();
 console.log("user was cleared");
 
-module.exports = {getUser, getUserInfo, removeUser, createUser, removeAllUsers, verifyUser};
+module.exports = {
+  getUser,
+  getUserInfo,
+  removeUser,
+  createUser,
+  removeAllUsers,
+  verifyUser,
+  getAllUsers
+};

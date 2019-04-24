@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import Register from "./Register.jsx";
 import {
-  BrowserRouter as Router,
+  BrowserRouter as Router, Link,
   Route,
   Switch
 } from "react-router-dom";
@@ -44,10 +44,21 @@ export class App extends React.Component {
   };
 
   render(){
+    const loggedIn = this.state.username ? this.state.username : null;
     return (
       <div>
         <Router>
           <div>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-8"> {loggedIn ?
+                <p>Hallo <Link to={"/"}>{loggedIn}</Link></p> : "Welcome to Exambook"} </div>
+              <div className="col-sm-4">
+                {!loggedIn && <Link to="/login" className="mr-5">Login</Link>}
+                {!loggedIn && <Link to="/register">Register</Link> }
+              </div>
+            </div>
+          </div>
             <Switch>
               <Route path="/login"
                      exact={true}

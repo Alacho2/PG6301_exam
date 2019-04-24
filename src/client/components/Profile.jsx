@@ -1,5 +1,6 @@
 import React from 'react';
 import {getProfile} from "../client-util.js";
+import {Link} from "react-router-dom";
 
 export class Profile extends React.Component {
 
@@ -28,20 +29,34 @@ export class Profile extends React.Component {
     this.setState({id: user.id, profile: user})
   };
 
+  becomeFriends = () => {
+
+    //Vi skal fetche post til et end-point, som tar med fromUser og toUser
+    //og legger til venneforespørselen på det arrayet
+    //For å hente skal vi bruke websockets
+
+  };
+
 
   render() {
-    console.log(this.state);
+    console.log(this.props.username);
     const profileInfo = this.state.profile ? this.state.profile : null;
+    const loggedIn = this.props.username ? this.props.username : null;
     return (
       <div>
         <h2>Profile</h2>
-        {profileInfo &&
-        <div>
-          <p>{profileInfo.id}</p>
-          <p>{profileInfo.birthday}</p>
-          <p>{profileInfo.country}</p>
-        </div>
+        {!loggedIn ? <div>You may not</div> :
+          profileInfo && <div>
+            <p>{profileInfo.id}</p>
+            <p>{profileInfo.birthday}</p>
+            <p>{profileInfo.country}</p>
+            {profileInfo.id !== loggedIn &&
+              <div id="friendBtn"
+                   onClick={this.becomeFriends}>Ask for friendship</div>
+            }
+          </div>
         }
+        <div id="backBtn" onClick={this.props.history.goBack}>Go back</div>
       </div>
     )
   }

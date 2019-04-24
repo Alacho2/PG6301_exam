@@ -17,7 +17,6 @@ const app = (app) => {
       const dto = JSON.parse(fromClient);
 
       if(dto.text !== "" && dto.author !== null){
-        console.log(userRepo.get)
         postRepo.createPost(dto.author, dto.text);
 
         const postLength = postRepo.getAllPosts().length-1;
@@ -25,6 +24,10 @@ const app = (app) => {
         distributeSomething([post])
       }
     });
+
+    ws.on('close', () => {
+      console.log(`Houston, we lost a connection. ${clients.size} connected`);
+    })
 
     /*ws.send(JSON.stringify({messages: messages, noClient: clients.size}));
 

@@ -77,6 +77,7 @@ export class Login extends React.Component{
              onChange={this.changePassword}/>
       {this.state.errorMsg !== null ? <div>{this.state.errorMsg}</div> : null}
       <div id="btn" onClick={this.doLogin}>Login</div>
+      <div onClick={this.props.history.goBack}>Go back</div>
     </div>
     )
   }

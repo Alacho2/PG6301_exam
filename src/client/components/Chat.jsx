@@ -13,9 +13,6 @@ export class Chat extends React.Component {
     this.socket = new WebSocket("ws://" + window.location.host + "/");
     this.socket.onmessage = ( event => {
       const resp = JSON.parse(event.data);
-
-      console.log(resp);
-
       this.setState(prev => {
         if(prev.messages === null){
           return {messages: resp.messages, clients: resp.noClient}

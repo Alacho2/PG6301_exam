@@ -18,10 +18,13 @@ export class Home extends React.Component {
   };
 
   componentDidMount(){
+    this.openSocket();
+  }
+
+  openSocket = () => {
     this.socket = new WebSocket("ws://" + window.location.host + "/feed");
     this.socket.onmessage = ( event => {
       const resp = JSON.parse(event.data);
-      console.log(resp);
       this.setState(prev => {
         if(prev.posts === null){
           return {posts: resp.posts}
@@ -30,10 +33,12 @@ export class Home extends React.Component {
         }
       })
     });
-  }
+  };
 
+  //Close the socket so we don't trigger state render on unmounted component
   componentWillUnmount() {
-    this.socket.close()
+    this.socket.close();
+    this.socket = null;
   }
 
   createPost = () => {
@@ -54,39 +59,35 @@ export class Home extends React.Component {
     const posts = this.state.posts ? this.state.posts : null;
     return (
       <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-8"><p>Hallo <Link to={"/"}>{loggedIn}</Link> </p></div>
-            <div className="col-sm-4">
-              {!loggedIn && <Link to="/login" className="mr-5">Login</Link>}
-              {!loggedIn && <Link to="/register">Register</Link> }
-            </div>
-           </div>
-        </div>
         <div className="container p-xl-5">
           <div className="row">
             <div className="col-sm-3 align-self-center" />
             <div className="col-sm-6 align-self-center">
-                <textarea cols="50"
+              {loggedIn ? <div><textarea cols="50"
                           id="messageArea"
                           rows="3"
                           value={this.state.postText}
                           placeholder={placeholderText}
                           onChange={this.onPostTextChange} />
                 <div id="btn" style={{cursor: "pointer"}} onClick={this.createPost}>Create post</div>
+              </div> : <p className="text-center">Please log in to be a part of this thing</p>}
             </div>
             <div className="col-sm-3 align-self-center" />
 
-
-
             <div className="col-sm-2 align-self-center" />
             <div className="col-sm-8 align-self-center">
-            {posts && posts.map(post => {
+            {posts !== null && posts.map(post => {
               const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
+              const writer = post.writer;
               return (
                 <div key={post.id} className="border-bottom mt-3">
                   {post && <div>
-                    <h5>{post.author} <span style={{fontSize: "14px", float: "right"}}>{ago}</span></h5>
+                    <h5><Link to={`/profile?id=${writer.id}`} >{writer.id}</Link>
+                      <span style={{
+                        fontSize: "14px",
+                        float: "right"}}>{ago}
+                      </span>
+                    </h5>
                     <p>{post.text}</p>
                   </div>}
                 </div>

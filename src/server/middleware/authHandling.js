@@ -26,7 +26,7 @@ module.exports = app => {
     secret: "A banana passed through here to seek support from bread",
     resave: false,
     cookie: {
-      maxAge: 60 * 60 * 2 // 2 hours cookie
+      maxAge: 60 * 60 * 60 * 2 // long enough to test various stuff
     },
     saveUninitialized: false
   }));
@@ -61,6 +61,4 @@ module.exports = app => {
   app.use(passport.session());
 
   app.use('/api', routes);
-
-  userRepo.createUser('Chef', "abcd", "25.05.1994", "Norway");
 };

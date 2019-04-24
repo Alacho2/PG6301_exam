@@ -158,6 +158,7 @@ export class Register extends React.Component {
             Sign Up
           </div>
         </div>
+        <div onClick={this.props.history.goBack}>Go back</div>
       </div>
     );
   }
