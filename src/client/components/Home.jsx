@@ -1,31 +1,34 @@
+/*
+  NOTE - File has been created based upon websockets lecture from
+  course content by https://github.com/arcuri82
+  https://github.com/arcuri82/web_development_and_api_design/blob/master/les09/chat/websocket-rest/src/client/home.jsx
+  TODO(Håvard) - Change input to label for
+*/
+
 import React from 'react';
 import {Link} from "react-router-dom";
+import moment from "moment";
 
 export class Home extends React.Component {
 
   state = {
     postText: "",
-    errorMsg: null
+    posts: null,
+    errorMsg: null,
   };
 
   componentDidMount(){
-    /*this.collectMenu() */
-
-    this.socket = new WebSocket("ws://" + window.location.host + "/");
+    this.socket = new WebSocket("ws://" + window.location.host + "/feed");
     this.socket.onmessage = ( event => {
       const resp = JSON.parse(event.data);
       console.log(resp);
-
-      /*const resp = JSON.parse(event.data);
-
       this.setState(prev => {
-        if(prev.messages === null){
-          return {messages: resp.messages, clients: resp.noClient}
+        if(prev.posts === null){
+          return {posts: resp.posts}
         } else {
-          console.log(resp);
-          return {messages: [...prev.messages, ...resp.messages], clients: resp.noClient}
+          return {posts: [...resp.posts, ...prev.posts]}
         }
-      }) */
+      })
     });
   }
 
@@ -40,14 +43,15 @@ export class Home extends React.Component {
     this.setState({postText: ""})
   };
 
-  onTextChange = (event) => {
+  onPostTextChange = (event) => {
     this.setState({postText: event.target.value})
   };
 
   render() {
-    //const menu = this.state.menu;
     const loggedIn = this.props.username ? this.props.username : null;
     const placeholderText = `What's on your mind, ${loggedIn}?`;
+
+    const posts = this.state.posts ? this.state.posts : null;
     return (
       <div>
         <div className="container">
@@ -61,17 +65,35 @@ export class Home extends React.Component {
         </div>
         <div className="container p-xl-5">
           <div className="row">
-            <div className="col-sm-12">
-              <div>
+            <div className="col-sm-3 align-self-center" />
+            <div className="col-sm-6 align-self-center">
                 <textarea cols="50"
                           id="messageArea"
-                          rows="5"
+                          rows="3"
                           value={this.state.postText}
                           placeholder={placeholderText}
-                          onChange={this.onTextChange} />
+                          onChange={this.onPostTextChange} />
                 <div id="btn" style={{cursor: "pointer"}} onClick={this.createPost}>Create post</div>
-              </div>
             </div>
+            <div className="col-sm-3 align-self-center" />
+
+
+
+            <div className="col-sm-2 align-self-center" />
+            <div className="col-sm-8 align-self-center">
+            {posts && posts.map(post => {
+              const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
+              return (
+                <div key={post.id} className="border-bottom mt-3">
+                  {post && <div>
+                    <h5>{post.author} <span style={{fontSize: "14px", float: "right"}}>{ago}</span></h5>
+                    <p>{post.text}</p>
+                  </div>}
+                </div>
+              )
+            })}
+            </div>
+            <div className="col-sm-2 align-self-center" />
           </div>
         </div>
       </div>

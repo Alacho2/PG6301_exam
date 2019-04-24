@@ -2,6 +2,8 @@ import React from 'react';
 import {getPost} from '../client-util.js';
 import moment from "moment";
 
+const paramMap = new Map();
+
 export class Post extends React.Component {
 
   state = {
@@ -10,7 +12,6 @@ export class Post extends React.Component {
   };
 
   componentDidMount() {
-    const paramMap = new Map();
     const searchSplit = location.search.split("&");
     searchSplit.forEach(item => {
       paramMap.set(item.split("=")[0], item.split("=")[1])

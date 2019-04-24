@@ -14,6 +14,8 @@ export class Chat extends React.Component {
     this.socket.onmessage = ( event => {
       const resp = JSON.parse(event.data);
 
+      console.log(resp);
+
       this.setState(prev => {
         if(prev.messages === null){
           return {messages: resp.messages, clients: resp.noClient}
@@ -75,7 +77,6 @@ export class Chat extends React.Component {
                     onChange={this.onTextChange} />
         </div>
         <br/>
-
         <div id="sendBtn" className="btn" onClick={this.sendMessage}>Send</div>
         {messages}
       </div>

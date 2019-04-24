@@ -6,18 +6,24 @@ const app = (app) => {
   const ews = require('express-ws')(app);
   const clients = ews.getWss().clients;
 
-  app.ws('/', function (ws, req) {
+  app.ws('/feed', function (ws, req) {
     console.log(`Houston, we have a connection. ${clients.size} connected`);
 
     const posts = postRepo.getAllPosts();
 
-    ws.send(JSON.stringify(posts));
+    ws.send(JSON.stringify({posts: posts.reverse(), noClients: clients}));
 
     ws.on('message', fromClient => {
-
       const dto = JSON.parse(fromClient);
-      const createPost = postRepo.createPost(dto.author, dto.text);
-      distributeSomething(postRepo.getAllPosts())
+
+      if(dto.text !== "" && dto.author !== null){
+        console.log(userRepo.get)
+        postRepo.createPost(dto.author, dto.text);
+
+        const postLength = postRepo.getAllPosts().length-1;
+        const post = postRepo.getAllPosts()[postLength];
+        distributeSomething([post])
+      }
     });
 
     /*ws.send(JSON.stringify({messages: messages, noClient: clients.size}));
@@ -47,7 +53,7 @@ const app = (app) => {
     clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({
-          messages: msg,
+          posts: msg,
           noClient: clients.size
         }));
       }
