@@ -195,12 +195,13 @@ export class Profile extends React.Component {
 
         {this.renderLoggedOut()}
         {this.renderProfileInfo()}
-        {loggedIn === profileInfo.id ? <div><textarea cols="50"
-                                                      id="messageArea"
-                                                      rows="3"
-                                                      value={this.state.postText}
-                                                      placeholder={placeholderText}
-                                                      onChange={this.onPostTextChange} />
+        {loggedIn === profileInfo.id ? <div>
+          <textarea cols="50"
+                    id="messageArea"
+                    rows="3"
+                    value={this.state.postText}
+                    placeholder={placeholderText}
+                    onChange={this.onPostTextChange} />
           <div id="btn" style={{cursor: "pointer"}} onClick={this.createPost}>Create post</div>
         </div> : null}
         {this.renderFriendShipButtonOrPosts()}
