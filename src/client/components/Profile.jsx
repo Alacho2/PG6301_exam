@@ -97,7 +97,7 @@ export class Profile extends React.Component {
             <p>{profileInfo.id}</p>
             <p>{profileInfo.birthday}</p>
             <p>{profileInfo.country}</p>
-            {profileInfo.id !== loggedIn &&
+            {profileInfo.id !== loggedIn && !lookUpFriends &&
             <div id="friendBtn"
                  onClick={this.becomeFriends}>Ask for friendship</div>
             }
