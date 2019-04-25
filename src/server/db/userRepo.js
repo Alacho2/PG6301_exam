@@ -58,7 +58,6 @@ function askForFriendship(fromUser, toUser){
     return false;
   }
 
-
   askedUser.requestFrom.push(asker.id);
   asker.requestTo.push(askedUser.id);
   return true;

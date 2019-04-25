@@ -11,4 +11,12 @@ module.exports = app => {
 
     //res.status(404).send() // Something went wrong
   })
+
+  app.post("/api/friend/requests", (req, res) => {
+    const username = req.body.username;
+    console.log(username);
+    const friendRequests = userRepo.getUser(username).requestFrom;
+    console.log(req.body, friendRequests);
+    res.status(200).send()
+  })
 };

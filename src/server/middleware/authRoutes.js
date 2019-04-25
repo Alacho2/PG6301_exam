@@ -55,5 +55,4 @@ const userRepo = require('../db/userRepo.js');
     res.status(200).json({users})
   });
 
-
 module.exports = router;

@@ -9,6 +9,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import moment from "moment";
 import Linkify from "react-linkify";
+import {FriendRequests} from "./FriendRequests.jsx";
 
 export class Home extends React.Component {
 
@@ -85,8 +86,8 @@ export class Home extends React.Component {
             </div>
             <div className="col-sm-3 align-self-center" />
 
-            <div className="col-sm-2 align-self-center" />
-            <div className="col-sm-8 align-self-center">
+            <div className="col-sm-1 align-self-center" />
+            <div className="col-sm-7 align-self-center">
             {posts !== null && posts.map(post => {
               const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
               const writer = post.writer;
@@ -105,7 +106,9 @@ export class Home extends React.Component {
               )
             })}
             </div>
-            <div className="col-sm-2 align-self-center" />
+            <div className="col-sm-3 align-self-center">
+              <FriendRequests username={loggedIn}/>
+            </div>
           </div>
         </div>
       </div>
