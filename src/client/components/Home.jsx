@@ -29,18 +29,18 @@ export class Home extends React.Component {
   }
 //
   openSocketFor = (username) => {
-        this.socket = new WebSocket(
-         `ws://${window.location.host}/feed?id=${encodeURIComponent(username)}`);
-        this.socket.onmessage = ( event => {
-          const resp = JSON.parse(event.data);
-          this.setState(prev => {
-            if(prev.posts === null){
-              return {posts: resp.posts}
-            } else {
-              return {posts: [...resp.posts, ...prev.posts]}
-            }
-          })
-      });
+    this.socket = new WebSocket(
+      `ws://${window.location.host}/feed?id=${encodeURIComponent(username)}`);
+    this.socket.onmessage = ( event => {
+      const resp = JSON.parse(event.data);
+      this.setState(prev => {
+        if(prev.posts === null){
+          return {posts: resp.posts}
+        } else {
+          return {posts: [...resp.posts, ...prev.posts]}
+        }
+      })
+    });
   };
 
   //Close the socket so we don't trigger state render on unmounted component
