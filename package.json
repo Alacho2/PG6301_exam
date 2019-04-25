@@ -25,6 +25,7 @@
     "passport-local": "^1.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-linkify": "^0.2.2",
     "react-router-dom": "^4.3.1",
     "style-loader": "^0.23.1",
     "ws": "^6.2.1"

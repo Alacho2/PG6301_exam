@@ -8,6 +8,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import moment from "moment";
+import Linkify from "react-linkify";
 
 export class Home extends React.Component {
 
@@ -98,7 +99,7 @@ export class Home extends React.Component {
                         float: "right"}}>{ago}
                       </span>
                     </h5>
-                    <p>{post.text}</p>
+                    <Linkify>{post.text}</Linkify>
                   </div>}
                 </div>
               )

@@ -2,6 +2,7 @@ import React from 'react';
 import {getProfile, askFriendship} from "../client-util.js";
 import moment from 'moment';
 import {Link} from "react-router-dom";
+import Linkify from "react-linkify";
 
 export class Profile extends React.Component {
 
@@ -9,7 +10,7 @@ export class Profile extends React.Component {
     id: "",
     profile: {},
     errorMsg: null,
-    posts: []
+    posts: [],
   };
 
   componentDidMount() {
@@ -121,7 +122,7 @@ export class Profile extends React.Component {
                     float: "right"}}>{ago}
                       </span>
                 </h5>
-                <p>{post.text}</p>
+                <Linkify>{post.text}</Linkify>
               </div>}
             </div>
           )
