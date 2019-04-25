@@ -1,6 +1,5 @@
 import React from 'react';
-import {getProfile} from "../client-util.js";
-import {askFriendship} from "../client-util";
+import {getProfile, askFriendship} from "../client-util.js";
 import moment from 'moment';
 import {Link} from "react-router-dom";
 
@@ -20,19 +19,15 @@ export class Profile extends React.Component {
       paramMap.set(item.split("=")[0], item.split("=")[1])
     });
 
-    this.getProfile(paramMap.get("?id"));
+    const user = paramMap.get("?id");
 
-    this.openSocketFor(paramMap.get("?id"));
+    this.getProfile(user);
+
+    this.openSocketFor(user);
   }
 
-  componentWillUpdate(nextProps, nextState, nextContext) {
-    if(nextProps.username !== this.props.username){
-      this.openSocketFor(nextProps.username);
-    }
-  }
-
-  componentDidUnmount() {
-    console.log("Unmount");
+  componentWillUnmount() {
+    console.log("Unmount profile");
     if (this.socket) {
       this.socket.close();
       this.socket = null;
@@ -64,6 +59,10 @@ export class Profile extends React.Component {
     });
   };
 
+  onPostTextChange = (event) => {
+    this.setState({postText: event.target.value})
+  };
+
   becomeFriends = async () => {
     const {profile} = this.state;
     const {username} = this.props;
@@ -72,16 +71,24 @@ export class Profile extends React.Component {
       this.setState({errorMsg: result.errorMsg})
     };
 
+  createPost = () => {
+    const payload = JSON.stringify({author: this.props.username, text: this.state.postText});
+    this.socket.send(payload);
+
+    this.setState({postText: ""})
+  };
+
 
   render() {
     const profileInfo = this.state.profile ? this.state.profile : null;
     const loggedIn = this.props.username ? this.props.username : null;
     const errorMsg = this.state.errorMsg;
     const posts = this.state.posts ? this.state.posts : null;
+    const placeholderText = `What's on your mind, ${profileInfo.id}?`;
     return (
       <div>
         <h2>Profile</h2>
-        {!loggedIn ? <div>You may not</div> :
+        {!loggedIn ? <div>You may not view someones page without logging in</div> :
           profileInfo && <div>
             <p>{profileInfo.id}</p>
             <p>{profileInfo.birthday}</p>
@@ -93,7 +100,16 @@ export class Profile extends React.Component {
             {errorMsg}
           </div>
         }
-        {posts !== null && posts.map(post => {
+
+        {loggedIn === profileInfo.id ? <div><textarea cols="50"
+                                   id="messageArea"
+                                   rows="3"
+                                   value={this.state.postText}
+                                   placeholder={placeholderText}
+                                   onChange={this.onPostTextChange} />
+          <div id="btn" style={{cursor: "pointer"}} onClick={this.createPost}>Create post</div>
+        </div> : null}
+        {loggedIn ? posts !== null && posts.map(post => {
           const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
           const writer = post.writer;
           return (
@@ -109,9 +125,7 @@ export class Profile extends React.Component {
               </div>}
             </div>
           )
-        })}
-
-
+        }) : null}
         <div id="backBtn" onClick={this.props.history.goBack}>Go back</div>
       </div>
     )

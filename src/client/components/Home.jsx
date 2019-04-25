@@ -66,7 +66,6 @@ export class Home extends React.Component {
   render() {
     const loggedIn = this.props.username ? this.props.username : null;
     const placeholderText = `What's on your mind, ${loggedIn}?`;
-
     const posts = this.state.posts ? this.state.posts : null;
     return (
       <div>

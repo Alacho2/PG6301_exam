@@ -19,7 +19,10 @@ const app = (app) => {
       where = profile
     }
 
-    if(profile !== "null" && profile !== undefined){
+    console.log(username, typeof username, profile, typeof profile);
+
+    if(profile !== "undefined" && profile !== undefined){
+      console.log("inside profile");
       console.log(`Houston, we have a connection to ${where}. ${clients.size} connected`);
 
       const ownPosts = postRepo.getUsersOwnPost(profile);
@@ -27,19 +30,20 @@ const app = (app) => {
       ws.send(JSON.stringify({posts: ownPosts.reverse()}));
 
       ws.on('message', fromClient => {
-        //const dto = JSON.parse(fromClient);
-        //console.log(dto);
+        const dto = JSON.parse(fromClient);
+
+        if(dto.text !== "" && dto.author !== null){
+          postRepo.createPost(dto.author, dto.text);
+          const postLength = postRepo.getUsersOwnPost(dto.author).length - 1;
+          const post = postRepo.getUsersOwnPost(dto.author)[postLength];
+          distributeSomething([post]);
+        }
       })
     }
 
-
     if (username !== "null" && username !== undefined) {
+      console.log("Inside username");
       console.log(`Houston, we have a connection to ${where}. ${clients.size} connected`);
-    /*
-      På profilen må vi filtrere på brukerens poster. Der får vi profile i req, så vi kan bruke den.
-      På feed må vi filtrere på brukerens venner og brukerens egne poster. Hent de og legg de til.
-     */
-
 
       const friendsPost = postRepo.getFriendsPost(username);
       const ownPost = postRepo.getUsersOwnPost(username);
@@ -91,7 +95,6 @@ const app = (app) => {
 
   const distributeSomething = (msg) => {
     clients.forEach(client => {
-      console.log(client.readyState);
       if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify({
           posts: msg,

@@ -12,13 +12,16 @@ function createPost(author, text){
 
   counter = ++counter+"";
 
-  const user = userRepo.getUserInfo(author);
+  const user = userRepo.getUser(author);
+
+  const newUser = {...user};
+  delete newUser.password;
 
   const date = moment().format('MMMM Do YYYY, h:mm:ss a');
 
   const post = {
     id: counter,
-    writer: user,
+    writer: newUser,
     text: text,
     date: date,
   };

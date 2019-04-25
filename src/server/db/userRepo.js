@@ -79,12 +79,13 @@ function removeAllUsers(){
     //Yet to be implemented
   })
 } */
+users.clear();
 
-createUser('Chef', "abcd", "29.09.1929", "Norway");
-createUser('Håvard', "1234", "25.05.1994", "Norway");
-
+createUser('Chef', 'lok', "29.09.1929", "Norway");
+createUser('Håvard', 'pok', "25.05.1994", "Norway");
 getUser('Chef').friends.push("Sjoko");
 //getUser('Håvard').friends.push("Sjoko");
+
 
 module.exports = {
   getUser,
