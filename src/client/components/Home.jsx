@@ -17,19 +17,17 @@ export class Home extends React.Component {
     postText: "",
     posts: null,
     errorMsg: null,
+
   };
 
+  constructor(props){
+    super(props);
+  }
+
   componentDidMount(){
-    //console.log(this.props.username, "Did mount");
       this.openSocketFor(this.props.username);
   }
 
-  componentWillUpdate(nextProps, nextState, nextContext) {
-    if(nextProps.username !== this.props.username){
-      this.openSocketFor(nextProps.username);
-    }
-  }
-//
   openSocketFor = (username) => {
     this.socket = new WebSocket(
       `ws://${window.location.host}/feed?id=${encodeURIComponent(username)}`);
@@ -106,8 +104,10 @@ export class Home extends React.Component {
               )
             })}
             </div>
-            <div className="col-sm-3 align-self-center">
-              <FriendRequests username={loggedIn}/>
+            <div className="col-sm-3">
+              {loggedIn &&
+                <FriendRequests username={this.props.username}/>
+              }
             </div>
           </div>
         </div>

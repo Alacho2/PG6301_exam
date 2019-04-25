@@ -51,10 +51,10 @@ describe("UserRepo", () => {
     const user = getUserInfo("Ben");
 
     expect(user.password).toBe(undefined)
-  })
+  });
 
   it("Should verify users password", () => {
     const verify = verifyUser("Ben", 1234);
     expect(verify).toBe(true)
-  })
+  });
 });

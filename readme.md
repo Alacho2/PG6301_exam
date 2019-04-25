@@ -17,3 +17,7 @@ The search is automatically cleared if the user doesn't click on anything
 * Hide search
 * Write more tests
 * Live chat between friends
+
+#####Known bugs
+
+There is a potential bug in the web socket code

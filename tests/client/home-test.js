@@ -41,7 +41,7 @@ describe("Testing the Home component", () => {
     overrideWebSocket(port);
     const driver = mount(
       <BrowserRouter>
-        <Home username="Sjoko"/>
+        <Home username="Chef"/>
       </BrowserRouter>
     );
 
@@ -55,8 +55,10 @@ describe("Testing the Home component", () => {
 
     displayedMessage = await asyncCheckCondition(predicate, 3000, 100);
 
+    console.log(driver.html());
+
     const html = driver.html();
-    expect(html.includes("a few seconds ago")).toBe(true);
+    expect(html.includes("What's on your")).toBe(true);
     expect(displayedMessage).toBe(true);
   });
 
@@ -85,7 +87,7 @@ describe("Testing the Home component", () => {
 
     const driver = mount(
       <BrowserRouter initialEntries={["/home"]}>
-        <Home fetchAndUpdateUserInfo={fetchAndUpdateUserInfo} username="Sjoko"/>
+        <Home setSignIn={fetchAndUpdateUserInfo} username="Chef"/>
       </BrowserRouter>
     );
 
@@ -96,6 +98,7 @@ describe("Testing the Home component", () => {
         && "Håvard") ;
     };
 
+    console.log(driver.html());
 
     let displayedMessage = await asyncCheckCondition(predicate, 3000, 100);
     expect(displayedMessage).toEqual(true);

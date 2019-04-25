@@ -55,7 +55,9 @@ export class App extends React.Component {
               <div className="col-sm-4"> {loggedIn ?
                 <p>Hallo <Link to={"/"}>{loggedIn}</Link></p> : "Welcome to Exambook"}
               </div>
-              <div className="col-sm-4"><SearchBar /></div>
+              <div className="col-sm-4">
+                {loggedIn && <SearchBar />}
+              </div>
               <div className="col-sm-4">
                 {!loggedIn && <Link to="/login" className="mr-5">Login</Link>}
                 {!loggedIn && <Link to="/register">Register</Link> }

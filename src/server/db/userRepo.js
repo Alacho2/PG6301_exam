@@ -54,6 +54,8 @@ function askForFriendship(fromUser, toUser){
   const askedUser = getUser(toUser);
   const asker = getUser(fromUser);
 
+  console.log(askedUser, asker);
+
   if(askedUser.requestFrom.includes(asker.id)) {
     return false;
   }
@@ -83,6 +85,8 @@ users.clear();
 createUser('Chef', 'lok', "29.09.1929", "Norway");
 createUser('Håvard', 'pok', "25.05.1994", "Norway");
 getUser('Chef').friends.push("Sjoko");
+getUser("Chef").requestFrom.push("Håvard");
+getUser("Håvard").requestTo.push("Chef");
 //getUser('Håvard').friends.push("Sjoko");
 
 
