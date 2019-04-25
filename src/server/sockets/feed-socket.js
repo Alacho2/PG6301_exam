@@ -18,6 +18,7 @@ const app = (app) => {
     } else {
       where = profile
     }
+
     if(profile !== "undefined" && profile !== undefined){
       console.log("inside profile");
       console.log(`Houston, we have a connection to ${where}. ${clients.size} connected`);
@@ -36,6 +37,10 @@ const app = (app) => {
           distributeSomething([post]);
         }
       })
+
+      ws.on('close', () => {
+        console.log(`Houston, we lost a connection. ${clients.size} connected`);
+      });
     }
 
     if (username !== "null" && username !== undefined) {

@@ -79,57 +79,132 @@ export class Profile extends React.Component {
     this.setState({postText: ""})
   };
 
+  renderLoggedOut() {
+    const loggedIn = this.props.username ? this.props.username : false;
+    if (!loggedIn) {
+      return <p>You need to login</p>
+    }
+  }
+
+
+  renderProfileInfo(){
+    const loggedIn = this.props.username ? this.props.username : false;
+    const profileInfo = this.state.profile ? this.state.profile : null;
+
+    if(profileInfo){
+      const myFriend = profileInfo.friends ? profileInfo.friends.includes(loggedIn) : false;
+      const myProfile = loggedIn === profileInfo.id;
+      if(loggedIn !== false){
+        if(myFriend || myProfile){
+          return (
+            <div>
+              {profileInfo &&
+              <div>
+                <p>{profileInfo.id}</p>
+                <p>{profileInfo.birthday}</p>
+                <p>{profileInfo.country}</p>
+              </div>
+              }
+            </div>
+          )
+        }
+      }
+    } else {
+      return (<div></div>)
+    }
+  }
+
+  renderFriendShipButtonOrPosts(){
+    const loggedIn = this.props.username ? this.props.username : false;
+    const profileInfo = this.state.profile ? this.state.profile : null;
+    const posts = this.state.posts ? this.state.posts : null;
+    const errorMsg = this.state.errorMsg;
+
+    if(profileInfo && loggedIn){
+      const myFriend = profileInfo.friends ? profileInfo.friends.includes(loggedIn) : false;
+      const myProfile = loggedIn === profileInfo.id;
+      if(!myFriend && !myProfile){
+        return (
+          <div>
+            <div id="friendBtn" onClick={this.becomeFriends}>Ask for friendship</div>
+            {errorMsg}
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            {posts !== null && posts.map(post => {
+            const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
+            const writer = post.writer;
+            return (
+            <div key={post.id} className="border-bottom mt-3">
+            {post && <div>
+              <h5><Link to={`/profile?id=${writer.id}`} >{writer.id}</Link>
+                <span style={{
+                  fontSize: "14px",
+                  float: "right"}}>{ago}
+                      </span>
+              </h5>
+              <Linkify>{post.text}</Linkify>
+            </div>}
+            </div>
+            )
+          })}
+          </div>
+        )
+      }
+    }
+  }
+
+  renderPosts(){
+    const loggedIn = this.props.username ? this.props.username : false;
+    const posts = this.state.posts ? this.state.posts : null;
+    {loggedIn ? posts !== null && posts.map(post => {
+      const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
+      const writer = post.writer;
+      return (
+        <div key={post.id} className="border-bottom mt-3">
+          {post && <div>
+            <h5><Link to={`/profile?id=${writer.id}`} >{writer.id}</Link>
+              <span style={{
+                fontSize: "14px",
+                float: "right"}}>{ago}
+                      </span>
+            </h5>
+            <Linkify>{post.text}</Linkify>
+          </div>}
+        </div>
+      )
+    }) : null}
+  }
+
 
   render() {
+    const loggedIn = this.props.username ? this.props.username : false;
     const profileInfo = this.state.profile ? this.state.profile : null;
-    const loggedIn = this.props.username ? this.props.username : null;
-    const errorMsg = this.state.errorMsg;
-    const posts = this.state.posts ? this.state.posts : null;
     const placeholderText = `What's on your mind, ${profileInfo.id}?`;
-    const lookUpFriends = profileInfo.friends ? profileInfo.friends.includes(loggedIn) : null;
+    //const myProfile = loggedIn === profileInfo.id;
+
+
+    //Når brukeren ikke er logget inn, skal den si det.
+    //Når brukeren er logget inn
 
     return (
       <div>
         <h2>Profile</h2>
-        {!loggedIn || !lookUpFriends ?
-          <div>You may not view someones page without logging/being friends with them</div> :
-          profileInfo && <div>
-            <p>{profileInfo.id}</p>
-            <p>{profileInfo.birthday}</p>
-            <p>{profileInfo.country}</p>
-            {profileInfo.id !== loggedIn && !lookUpFriends &&
-            <div id="friendBtn"
-                 onClick={this.becomeFriends}>Ask for friendship</div>
-            }
-            {errorMsg}
-          </div>
-        }
 
+        {this.renderLoggedOut()}
+        {this.renderProfileInfo()}
         {loggedIn === profileInfo.id ? <div><textarea cols="50"
-                                   id="messageArea"
-                                   rows="3"
-                                   value={this.state.postText}
-                                   placeholder={placeholderText}
-                                   onChange={this.onPostTextChange} />
+                                                      id="messageArea"
+                                                      rows="3"
+                                                      value={this.state.postText}
+                                                      placeholder={placeholderText}
+                                                      onChange={this.onPostTextChange} />
           <div id="btn" style={{cursor: "pointer"}} onClick={this.createPost}>Create post</div>
         </div> : null}
-        {loggedIn ? posts !== null && posts.map(post => {
-          const ago = post.date ? moment(post.date, 'MMMM Do YYYY, h:mm:ss a').fromNow() : null;
-          const writer = post.writer;
-          return (
-            <div key={post.id} className="border-bottom mt-3">
-              {post && <div>
-                <h5><Link to={`/profile?id=${writer.id}`} >{writer.id}</Link>
-                  <span style={{
-                    fontSize: "14px",
-                    float: "right"}}>{ago}
-                      </span>
-                </h5>
-                <Linkify>{post.text}</Linkify>
-              </div>}
-            </div>
-          )
-        }) : null}
+        {this.renderFriendShipButtonOrPosts()}
+
         <div id="backBtn" onClick={this.props.history.goBack}>Go back</div>
       </div>
     )

@@ -6,7 +6,7 @@ let counter = 0;
 
 function getOnePost(id) {
   return posts.get(id)
-};
+}
 
 function createPost(author, text){
 

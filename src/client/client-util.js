@@ -53,6 +53,7 @@ const askFriendship = async (userTo, userFrom) => {
     return {errorMsg: "Failed to connect " + err};
 
   }
+
   if (response.status === 400) {
     return {errorMsg: "Invalid username/password"};
   }
