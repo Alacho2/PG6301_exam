@@ -11,6 +11,7 @@ export class FriendRequests extends React.Component {
     const user = this.props.username;
     this.getFriendRequests(user);
   }
+
   getFriendRequests = async (username) => {
     const url = `api/friend/${username}`;
 
@@ -29,36 +30,57 @@ export class FriendRequests extends React.Component {
     }
   };
 
-  /*
-  const getPost = async (id) => {
-  const url = `/api/posts/${id}`;
-  try {
-    const response = await fetch(url,
-      {
-        method: 'get',
+  respondReq = async (code, respondTo) => {
+
+
+    const url =`/api/friend/${respondTo}`;
+
+    const payload = {
+      code: code,
+      respondTo: respondTo,
+      respondFrom: this.props.username
+    };
+
+    let response;
+    try {
+      response = await fetch(url, {
+        method: "put",
         headers: {
-          "Content-Type": "application/json"
+          "Content-type": "application/json"
         },
-      }
-    );
-    const result = await response.json();
-    return {post: result, status: response.status}
-  } catch (error) {
-    return {errorMsg: error}
-  }
-};
-   */
-
-
+        body: JSON.stringify(payload)
+      })
+    } catch(err) {
+      return false
+    }
+    return response.status === 204
+  };
 
   render() {
     const requests = this.state.requests;
+    console.log(requests);
 
     return (
       <div>{requests && requests.map((request, index) => {
         return (
           <div key={index}>
-            <Link to={`/profile?id=${request}`}>{request}</Link>
+            <div className="container border-bottom">
+              <div className="row">
+                <div className="col-sm-12">
+                  <Link to={`/profile?id=${request}`}>{request}</Link>
+                </div>
+                <div className="col-sm-6 text-primary">
+                  <div id="acceptBtn"
+                       style={{cursor: "pointer"}}
+                       onClick={() => {this.respondReq(1, request)}}>Accept</div>
+                </div>
+                <div className="col-sm-6 mb-lg-3 text-warning">
+                  <div id="rejectBtn"
+                       style={{cursor: "pointer"}}
+                       onClick={() => {this.respondReq(0, request)}}>Reject</div>
+                </div>
+              </div>
+            </div>
           </div>
         )
       })}</div>

@@ -48,7 +48,7 @@ describe("Testing application authentication", () => {
 
   it("Should test logging a user out", async () => {
     await logUserIn();
-    let response = await request(app).post("/api/logout");
+    let response = await request(app).get("/api/logout");
 
     expect(response.statusCode).toBe(204);
   })

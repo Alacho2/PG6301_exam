@@ -13,10 +13,11 @@ that is why I felt it was okay to use a pre-written module
 Regarding search - 
 The search is automatically cleared if the user doesn't click on anything
 
-
 * Hide search
 * Write more tests
 * Live chat between friends
+
+Remember to mention the ask for friendship + it being cleared if one of the users accept
 
 #####Known bugs
 

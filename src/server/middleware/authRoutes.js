@@ -35,7 +35,7 @@ const userRepo = require('../db/userRepo.js');
   });
 
   //TODO(Håvard) Implement as a post. Change the test if you change this
-  router.post('/logout', function(req, res){
+  router.get('/logout', function(req, res){
     req.logout();
     res.status(204).send();
   });

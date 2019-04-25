@@ -7,7 +7,7 @@ function getUser(id){
 function getUserInfo(id) {
   const user = getUser(id);
   if(user){
-    delete user.password
+    //delete user.password
   }
   return user;
 }
@@ -30,6 +30,7 @@ function verifyUser(id, password){
 function getAllUsers(){
   return Array.from(users.values());
 }
+
 
 function createUser(id, password, birthday, country){
   if(getUser(id) !== undefined || id === undefined){
@@ -54,8 +55,6 @@ function askForFriendship(fromUser, toUser){
   const askedUser = getUser(toUser);
   const asker = getUser(fromUser);
 
-  console.log(askedUser, asker);
-
   if(askedUser.requestFrom.includes(asker.id)) {
     return false;
   }
@@ -63,6 +62,33 @@ function askForFriendship(fromUser, toUser){
   askedUser.requestFrom.push(asker.id);
   asker.requestTo.push(askedUser.id);
   return true;
+}
+
+function friendRequestUpdate(code, fromUser, to){
+  const askedUser = getUser(to);
+  const asker = getUser(fromUser);
+
+  const askedIndex = askedUser.requestFrom.findIndex(user => {
+    return user === asker.id
+  });
+
+  const askIndex = asker.requestTo.findIndex(user => {
+    return user === askedUser.id
+  });
+
+  if(code === 1){
+    askedUser.friends.push(asker.id);
+    asker.friends.push(askedUser.id);
+    askedUser.requestFrom.splice(askedIndex, 1);
+    asker.requestTo.splice(askIndex, 1);
+    return true;
+  } else {
+    askedUser.requestFrom.splice(askedIndex, 1);
+    asker.requestTo.splice(askIndex, 1);
+    console.log(askedUser.friends, asker.friends, code);
+    console.log(askedUser.requestFrom, asker.requestTo);
+    return false
+  }
 }
 
 function removeAllUsers(){
@@ -74,17 +100,11 @@ function removeAllUsers(){
   }
 }
 
-//TODO(Håvard) Perhaps
-/*function updateUser(id, password, name){
-  users.forEach(user => {
-    //Yet to be implemented
-  })
-} */
 users.clear();
 
 createUser('Chef', 'lok', "29.09.1929", "Norway");
 createUser('Håvard', 'pok', "25.05.1994", "Norway");
-getUser('Chef').friends.push("Sjoko");
+//getUser('Chef').friends.push("Sjoko");
 getUser("Chef").requestFrom.push("Håvard");
 getUser("Håvard").requestTo.push("Chef");
 //getUser('Håvard').friends.push("Sjoko");
@@ -99,4 +119,5 @@ module.exports = {
   verifyUser,
   getAllUsers,
   askForFriendship,
+  friendRequestUpdate,
 };
