@@ -41,7 +41,7 @@ describe("Testing the Home component", () => {
     overrideWebSocket(port);
     const driver = mount(
       <BrowserRouter>
-        <Home />
+        <Home username="Sjoko"/>
       </BrowserRouter>
     );
 
@@ -85,7 +85,7 @@ describe("Testing the Home component", () => {
 
     const driver = mount(
       <BrowserRouter initialEntries={["/home"]}>
-        <Home fetchAndUpdateUserInfo={fetchAndUpdateUserInfo} />
+        <Home fetchAndUpdateUserInfo={fetchAndUpdateUserInfo} username="Sjoko"/>
       </BrowserRouter>
     );
 

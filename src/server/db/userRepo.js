@@ -83,6 +83,9 @@ function removeAllUsers(){
 createUser('Chef', "abcd", "29.09.1929", "Norway");
 createUser('Håvard', "1234", "25.05.1994", "Norway");
 
+getUser('Chef').friends.push("Sjoko");
+//getUser('Håvard').friends.push("Sjoko");
+
 module.exports = {
   getUser,
   getUserInfo,

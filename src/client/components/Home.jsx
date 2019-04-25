@@ -18,27 +18,38 @@ export class Home extends React.Component {
   };
 
   componentDidMount(){
-    this.openSocket();
+    //console.log(this.props.username, "Did mount");
+      this.openSocketFor(this.props.username);
   }
 
-  openSocket = () => {
-    this.socket = new WebSocket("ws://" + window.location.host + "/feed");
-    this.socket.onmessage = ( event => {
-      const resp = JSON.parse(event.data);
-      this.setState(prev => {
-        if(prev.posts === null){
-          return {posts: resp.posts}
-        } else {
-          return {posts: [...resp.posts, ...prev.posts]}
-        }
-      })
-    });
+  componentWillUpdate(nextProps, nextState, nextContext) {
+    if(nextProps.username !== this.props.username){
+      this.openSocketFor(nextProps.username);
+    }
+  }
+//
+  openSocketFor = (username) => {
+        this.socket = new WebSocket(
+         `ws://${window.location.host}/feed?id=${encodeURIComponent(username)}`);
+        this.socket.onmessage = ( event => {
+          const resp = JSON.parse(event.data);
+          this.setState(prev => {
+            if(prev.posts === null){
+              return {posts: resp.posts}
+            } else {
+              return {posts: [...resp.posts, ...prev.posts]}
+            }
+          })
+      });
   };
 
   //Close the socket so we don't trigger state render on unmounted component
   componentWillUnmount() {
-    this.socket.close();
-    this.socket = null;
+    console.log("UNmount");
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
+    }
   }
 
   createPost = () => {

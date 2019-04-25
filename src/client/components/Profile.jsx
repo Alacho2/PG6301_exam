@@ -1,6 +1,5 @@
 import React from 'react';
 import {getProfile} from "../client-util.js";
-import {Link} from "react-router-dom";
 import {askFriendship} from "../client-util";
 
 export class Profile extends React.Component {
