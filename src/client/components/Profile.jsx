@@ -86,10 +86,13 @@ export class Profile extends React.Component {
     const errorMsg = this.state.errorMsg;
     const posts = this.state.posts ? this.state.posts : null;
     const placeholderText = `What's on your mind, ${profileInfo.id}?`;
+    const lookUpFriends = profileInfo.friends ? profileInfo.friends.includes(loggedIn) : null;
+
     return (
       <div>
         <h2>Profile</h2>
-        {!loggedIn ? <div>You may not view someones page without logging in</div> :
+        {!loggedIn || !lookUpFriends ?
+          <div>You may not view someones page without logging/being friends with them</div> :
           profileInfo && <div>
             <p>{profileInfo.id}</p>
             <p>{profileInfo.birthday}</p>

@@ -18,9 +18,6 @@ const app = (app) => {
     } else {
       where = profile
     }
-
-    console.log(username, typeof username, profile, typeof profile);
-
     if(profile !== "undefined" && profile !== undefined){
       console.log("inside profile");
       console.log(`Houston, we have a connection to ${where}. ${clients.size} connected`);

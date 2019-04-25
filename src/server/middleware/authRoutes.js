@@ -41,13 +41,18 @@ const userRepo = require('../db/userRepo.js');
   });
 
   router.get("/user", (req, res) => {
-    if(req.user){
-      res.json({
+    if(req.user) {
+      res.status(200).json({
         userId: req.user.id,
       });
       return
     }
     res.status(401).send()
+  });
+
+  router.get("/users", (req, res) => {
+    const users = userRepo.getAllUsers();
+    res.status(200).json({users})
   });
 
 
