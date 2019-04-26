@@ -4,7 +4,7 @@ Test user: `Chef - lok`
 
 Link: http://localhost:8080/
 
-####Intro
+#### Intro
 This was quite a task, I didn't actually expect I'd pull off as much as I did, but here I am.
 The project is almost finished (see missing functionality section). This project is written from 
 scratch in React and Node.js, with the help of Express (for server functionality), 
@@ -14,7 +14,7 @@ Files that have been gotten from the course content have been marked.
 
 Time period: 48 hours.
 
-#####Structure
+##### Structure
 Up until the live chat, everything is implemented as described in the chat. Before the user 
 signs up, they do not see any form of information under /profile?id=Chef and not under posts.
 They are also not able to ask for friendship or see similar. If the user is signed in, they immediately see their
@@ -34,7 +34,7 @@ The following commands are in the project
 * `yarn watch:server` - This boots up the server with the help of Nodemon for development.
 * `yarn start` - This will start the server with regularly with node.
 
-####Starting the application
+#### Starting the application
 ```
 yarn install
 ```
@@ -57,13 +57,13 @@ Here are images of the project structure and the logged in version. Notice the C
 NOTE! Node is a notorious hog on the last four commands. Be sure to run cmd/ctrl+c in your console between them.
 If you see errors, be sure to run kill node before trying again.
 
-####Test data
+#### Test data
 Immediately upon the creation of the system, two users are made as dummy accounts. One to be tested and one to provide 
 data for the tested user. You may sign in with the main, which is `Chef`. His password should be `lok`, but you may find his creation in the userRepo.js-file.
 
 
 
-####Testing
+#### Testing
 I have 53.41% coverage as of 04:51 am Friday morning. I do also include some other tests that are not
 run through `yarn test`, but I could not make them work, so I decided to leave them out.
 
@@ -71,7 +71,7 @@ run through `yarn test`, but I could not make them work, so I decided to leave t
 
 
 
-####Extras
+#### Extras
 
 * Link to Profile in feed
 * Can't send more friend requests than one to each user
@@ -83,14 +83,14 @@ render a link and strip of potential problems. It is a dangerous thing to trust 
 that is why I felt it was okay to use a pre-written module
 
 
-###Evaluation
+### Evaluation
 Overall, I must say that I'm pretty proud of myself. I had never thought I would have 
 managed to implement such functionality. I know I didn't meet all requirements, but I learned a lot and did some simple extras. 
 With so many functioning parts, I think it's quite an accomplishment to have written a small version of facebook in 48 hours.
 I've followed must clean code-principles, within the time frame, and kept it as simple as possible
 If I were to grade myself, I feel I deserve a **B**.
 
-##Missing functionality
+## Missing functionality
 * The live chat - I had an okay implementation of it, but only based upon all users and not friends. I therefor decided to leave this out.
 
 Remember to mention the ask for friendship + it being cleared if one of the users accept
