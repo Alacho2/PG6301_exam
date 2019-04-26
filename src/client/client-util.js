@@ -16,24 +16,6 @@ const getProfile = async (id) => {
   }
 };
 
-const getPost = async (id) => {
-  const url = `/api/posts/${id}`;
-  try {
-    const response = await fetch(url,
-      {
-        method: 'get',
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    );
-    const result = await response.json();
-    return {post: result, status: response.status}
-  } catch (error) {
-    return {errorMsg: error}
-  }
-};
-
 const askFriendship = async (userTo, userFrom) => {
   const url = '/api/friend';
 
@@ -67,7 +49,7 @@ const askFriendship = async (userTo, userFrom) => {
     return {errorMsg: "Error when connecting to server. Status code: " + response.status};
 
   }
-  return {errorMsg: "Request sent"};
+  return {errorMsg: "Request sent", status: response.status};
 };
 
-export {getProfile, getPost, askFriendship}
+export {getProfile, askFriendship}

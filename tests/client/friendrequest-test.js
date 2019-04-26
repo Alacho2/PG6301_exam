@@ -50,6 +50,9 @@ describe("FriendRequest Test", () => {
 
     let displayedMessage = await asyncCheckCondition(predicate, 3000, 100);
 
+    const acceptBtn = driver.find("#acceptBtn").first();
+    acceptBtn.simulate('click');
+
     expect(displayedMessage).toBe(true);
 
     expect(driver.html().includes("No requests")).toBe(false);

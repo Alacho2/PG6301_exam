@@ -1,5 +1,3 @@
-import Chat from "./Chat.jsx";
-//import Edit from "./Edit.jsx";
 import Home from "./Home.jsx";
 import Login from "./Login.jsx";
 import NotFound from "./NotFound.jsx";
@@ -79,11 +77,6 @@ export class App extends React.Component {
                        <Profile {...props}
                                  username={this.state.username}
                                  setSignIn={this.setSignIn}/>}/>
-              <Route exact path="/chat"
-                     render={props =>
-                       <Chat {...props}
-                             username={this.state.username}
-                             setSignIn={this.setSignIn}/>}/>
               <Route path="/"
                      exact={true}
                      render={props =>

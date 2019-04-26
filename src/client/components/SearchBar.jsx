@@ -48,6 +48,7 @@ export class SearchBar extends React.Component {
   };
 
   render() {
+    console.log(this.state.users);
     const placeHolderText = this.state.errorMsg !== "" ?
       this.state.errorMsg : "Search for a user";
     const users = this.state.users;

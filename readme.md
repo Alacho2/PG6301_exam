@@ -16,8 +16,7 @@ The search is automatically cleared if the user doesn't click on anything
 * Write more tests
 * Live chat between friends
 
+##Missing functionality
+* The live chat
+
 Remember to mention the ask for friendship + it being cleared if one of the users accept
-
-#####Known bugs
-
-There is a potential bug in the web socket code

@@ -58,6 +58,7 @@ export class Profile extends React.Component {
         }
       })
     });
+
   };
 
   onPostTextChange = (event) => {
@@ -180,6 +181,8 @@ export class Profile extends React.Component {
 
 
   render() {
+
+    console.log(this.state);
     const loggedIn = this.props.username ? this.props.username : false;
     const profileInfo = this.state.profile ? this.state.profile : null;
     const placeholderText = `What's on your mind, ${profileInfo.id}?`;

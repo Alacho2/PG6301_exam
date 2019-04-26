@@ -183,6 +183,7 @@ function overrideWebSocket(port) {
 
     constructor(url) {
 
+      console.log(url);
 
       const replaced = url.replace(/((?<!\/)\/(?!\/))/, ":" + port + "/");
       super(replaced);
