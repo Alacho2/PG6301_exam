@@ -1,5 +1,7 @@
 const WebSocket = require('ws');
 
+const {orderBy} = require('lodash');
+
 const postRepo = require('../db/postRepo.js');
 
 const app = (app) => {
@@ -20,7 +22,6 @@ const app = (app) => {
     }
 
     if(profile !== "undefined" && profile !== undefined){
-      console.log("inside profile");
       console.log(`Houston, we have a connection to ${where}. ${clients.size} connected`);
 
       const ownPosts = postRepo.getUsersOwnPost(profile);
@@ -44,7 +45,6 @@ const app = (app) => {
     }
 
     if (username !== "null" && username !== undefined) {
-      console.log("Inside username");
       console.log(`Houston, we have a connection to ${where}. ${clients.size} connected`);
 
       const friendsPost = postRepo.getFriendsPost(username);
@@ -53,7 +53,11 @@ const app = (app) => {
       posts = posts.concat(friendsPost);
       posts = posts.concat(ownPost);
 
-      ws.send(JSON.stringify({posts: posts.reverse(), noClients: clients}));
+      //console.log(posts.sort());
+
+      posts = orderBy(posts, ['id'], ['desc']);
+
+      ws.send(JSON.stringify({posts: posts, noClients: clients}));
 
       ws.on('message', fromClient => {
         const dto = JSON.parse(fromClient);

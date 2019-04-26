@@ -12,9 +12,7 @@ import {
   Switch
 } from "react-router-dom";
 import Profile from "./Profile.jsx";
-import Post from "./Post.jsx";
 import SearchBar from "./SearchBar";
-//import Create from "./Create";
 
 export class App extends React.Component {
 
@@ -81,11 +79,6 @@ export class App extends React.Component {
                        <Profile {...props}
                                  username={this.state.username}
                                  setSignIn={this.setSignIn}/>}/>
-              <Route exact path="/post"
-                     render={props =>
-                       <Post {...props}
-                                username={this.state.username}
-                                setSignIn={this.setSignIn}/>}/>
               <Route exact path="/chat"
                      render={props =>
                        <Chat {...props}

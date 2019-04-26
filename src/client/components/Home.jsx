@@ -9,7 +9,7 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import moment from "moment";
 import Linkify from "react-linkify";
-import {FriendRequests} from "./FriendRequests.jsx";
+import FriendRequests from "./FriendRequests.jsx";
 
 export class Home extends React.Component {
 
@@ -25,7 +25,9 @@ export class Home extends React.Component {
   }
 
   componentDidMount(){
-      this.openSocketFor(this.props.username);
+    setTimeout(() => {
+      this.openSocketFor(this.props.username); console.log("I did mount", this.props.username)
+    }, 50)
   }
 
   openSocketFor = (username) => {
@@ -45,7 +47,6 @@ export class Home extends React.Component {
 
   //Close the socket so we don't trigger state render on unmounted component
   componentWillUnmount() {
-    console.log("UNmount");
     if (this.socket) {
       this.socket.close();
       this.socket = null;
@@ -54,7 +55,9 @@ export class Home extends React.Component {
 
   createPost = () => {
     const payload = JSON.stringify({author: this.props.username, text: this.state.postText});
-    this.socket.send(payload);
+    if(this.socket){
+      this.socket.send(payload);
+    }
 
     this.setState({postText: ""})
   };
@@ -67,6 +70,8 @@ export class Home extends React.Component {
     const loggedIn = this.props.username ? this.props.username : null;
     const placeholderText = `What's on your mind, ${loggedIn}?`;
     const posts = this.state.posts ? this.state.posts : null;
+
+    console.log("In render");
     return (
       <div>
         <div className="container p-xl-5">

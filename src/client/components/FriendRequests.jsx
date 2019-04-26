@@ -5,6 +5,7 @@ export class FriendRequests extends React.Component {
 
   state = {
     requests: [],
+    errorMsg: "",
   };
 
   componentDidMount() {
@@ -53,13 +54,27 @@ export class FriendRequests extends React.Component {
     } catch(err) {
       return false
     }
-    return response.status === 204
+    if(response.status === 304){
+      this.setState({errorMsg: "Shoot, something went wrong with that request"})
+      return;
+    }
+
+    if(response.status === 204){
+      const frenReqs = [...this.state.requests];
+      const reqIndex = frenReqs.findIndex(user => {
+        return user === respondTo
+      });
+
+      frenReqs.splice(reqIndex, 1);
+      this.setState({errorMsg: "You're now friends", requests: frenReqs});
+      return;
+    }
   };
 
   render() {
     const requests = this.state.requests;
-    console.log(requests);
 
+    console.log(requests);
     return (
       <div>{requests && requests.map((request, index) => {
         return (
@@ -83,7 +98,10 @@ export class FriendRequests extends React.Component {
             </div>
           </div>
         )
-      })}</div>
+      })}
+        {requests.length < 1 ? <div>No requests available</div> : null}
+
+      </div>
     )
   }
 }
