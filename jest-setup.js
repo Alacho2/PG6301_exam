@@ -1,3 +1,10 @@
+/*
+  NOTE - File has been copied (and to some degree extended/modified) from
+  course content by
+  https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/tests/jest-setup.js
+
+ */
+
 const {configure } = require('enzyme/build');
 const jsdom = require('jsdom');
 const Adapter = require('enzyme-adapter-react-16/build');

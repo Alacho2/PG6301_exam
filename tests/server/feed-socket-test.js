@@ -1,3 +1,8 @@
+/*
+This file has been copied and to some degree modified from the course content
+https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/tests/server/routes/auth-api-test.js
+ */
+
 const request = require('supertest');
 const {app} = require('../../src/server/app');
 const WS = require('ws');
@@ -22,10 +27,6 @@ describe("WebSocket Handling",  () => {
   const sockets = [];
 
   afterEach(() => {
-    /*
-        make sure to manually free the sockets, otherwise might block Jest and the
-        shutting down of Express...
-    */
     for (let i = 0; i < sockets.length; i++) {
       console.log("Closing socket: " + i);
       sockets[i].close();

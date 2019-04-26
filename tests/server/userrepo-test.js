@@ -47,12 +47,6 @@ describe("UserRepo", () => {
     expect(getUser("Ben")).toEqual(undefined)
   });
 
-  it("Should get user, but not include password", () => {
-    /*const user = getUserInfo("Ben");
-
-    expect(user.password).toBe(undefined) */
-  });
-
   it("Should verify users password", () => {
     const verify = verifyUser("Ben", 1234);
     expect(verify).toBe(true)
